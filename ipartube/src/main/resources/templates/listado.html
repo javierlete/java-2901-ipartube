@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html th:replace="~{_global :: global(~{::title}, ~{::main})}"
+	xmlns:th="https://thymeleaf.org">
+<title>IparTube: listado de videos</title>
+
+<main>
+	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-4">
+		<div th:each="video: ${videos}" th:object="${video}" class="col">
+			<div class="card h-100">
+				<iframe th:src="${video.url}" src="https://prd.place/400/300" class="card-img-top"></iframe>
+				<div class="card-body">
+					<h5 class="card-title" th:text="*{titulo}">TITULO</h5>
+					<p class="card-text" th:text="*{descripcion}">EL MEJOR VIDEO</p>
+					<p class="card-text">
+						<a class="btn btn-primary w-100" href="video.html" th:href="@{/video(id=${video.id})}">Ver video</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+
+</html>
