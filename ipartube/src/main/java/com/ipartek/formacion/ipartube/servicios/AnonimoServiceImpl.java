@@ -1,6 +1,7 @@
 package com.ipartek.formacion.ipartube.servicios;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ipartek.formacion.ipartube.entidades.Usuario;
@@ -19,6 +20,9 @@ public class AnonimoServiceImpl implements AnonimoService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@Override
 	public Iterable<Video> listadoVideos() {
 		return videoRepository.findAll();
@@ -31,6 +35,7 @@ public class AnonimoServiceImpl implements AnonimoService {
 
 	@Override
 	public Usuario registro(@Valid Usuario usuario) {
+		usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 		return usuarioRepository.save(usuario);
 	}
 
