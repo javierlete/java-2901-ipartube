@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html th:replace="~{_global :: global(~{::title}, ~{::main})}"
+	xmlns:th="https://thymeleaf.org">
+<title>IparTube: listado de videos</title>
+
+<main>
+	<form action="listado.html" th:action="@{/registro}" method="post" th:object="${usuario}">
+		<div th:replace="_fragmentos :: labelInput('Nombre', 'nombre', true, 'text')"></div>
+		<div th:replace="_fragmentos :: labelInput('Email', 'email', true, 'email')"></div>
+		<div th:replace="_fragmentos :: labelInput('Contraseña', 'password', true, 'password')"></div>
+		
+		<button class="btn btn-primary">Guardar</button>
+	</form>
+</main>
+
+</html>
