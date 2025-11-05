@@ -9,7 +9,7 @@
 		<div th:replace="~{_fragmentos :: labelInput('URL', 'url', true, 'url')}"></div>
 		<div th:replace="~{_fragmentos :: labelInput('Descripción', 'descripcion', true, 'text')}"></div>
 		
-		<input type="hidden" name="usuario.id" th:value="${#authentication.principal.id}">
+		<input type="hidden" name="usuario.id" value="0">
 		
 		<button class="btn btn-primary">Guardar</button>
 	</form>

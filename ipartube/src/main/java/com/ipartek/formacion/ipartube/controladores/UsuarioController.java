@@ -1,12 +1,14 @@
 package com.ipartek.formacion.ipartube.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ipartek.formacion.ipartube.entidades.Usuario;
 import com.ipartek.formacion.ipartube.entidades.Video;
 import com.ipartek.formacion.ipartube.servicios.AutenticadoService;
 
@@ -26,13 +28,15 @@ public class UsuarioController {
 	}
 
 	@PostMapping("nuevo-video")
-	public String nuevoVideoPost(@Valid Video video, BindingResult bindingResult) {
+	public String nuevoVideoPost(@Valid Video video, BindingResult bindingResult, @AuthenticationPrincipal Usuario usuario) {
 		if (bindingResult.hasErrors()) {
 			log.warning(bindingResult.toString());
 			
 			return "usuario/nuevo-video";
 		}
 
+		video.setUsuario(usuario);
+		
 		autenticadoService.altaVideo(video);
 
 		return "redirect:/";
