@@ -9,7 +9,10 @@
 			<iframe th:src="${video.url}" class="img-fluid rounded-start"></iframe>
 		</div>
 		<div class="card-body">
-			<h5 class="card-title" th:text="*{titulo}">TITULO</h5>
+			<h5 class="card-title">
+				(<span th:text="*{usuario.nombre}">USUARIO</span>)
+				<span th:text="*{titulo}">TITULO</span>
+			</h5>
 			<p class="card-text" th:text="*{descripcion}">EL MEJOR VIDEO</p>
 		</div>
 	</div>
