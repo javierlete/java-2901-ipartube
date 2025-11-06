@@ -28,17 +28,25 @@ public class UsuarioController {
 	}
 
 	@PostMapping("nuevo-video")
-	public String nuevoVideoPost(@Valid Video video, BindingResult bindingResult, @AuthenticationPrincipal Usuario usuario) {
+	public String nuevoVideoPost(@Valid Video video, BindingResult bindingResult,
+			@AuthenticationPrincipal Usuario usuario) {
 		if (bindingResult.hasErrors()) {
 			log.warning(bindingResult.toString());
-			
+
 			return "usuario/nuevo-video";
 		}
 
 		video.setUsuario(usuario);
-		
+
 		autenticadoService.altaVideo(video);
 
 		return "redirect:/";
+	}
+
+	@GetMapping("borrar-video")
+	public String borrar(Long id, @AuthenticationPrincipal Usuario usuario) {
+		autenticadoService.bajaVideo(id, usuario.getId());
+
+		return "redirect:/canal?id=" + usuario.getId();
 	}
 }

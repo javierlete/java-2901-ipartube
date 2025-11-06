@@ -10,6 +10,8 @@
 		class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-4">
 		<div th:each="video: ${videos}" th:object="${video}" class="col">
 			<div class="card h-100">
+				<a th:href="@{/usuario/borrar-video(id=*{id})}" th:if="${#authentication.principal.id == usuario.id}" onclick="return confirm('¿Estás seguro?')" href="#" class="btn-close position-absolute top-0 end-0 m-2 text-bg-light" aria-label="Close"></a>
+				
 				<iframe th:src="${video.url}" src="https://prd.place/400/300"
 					class="card-img-top"></iframe>
 				<div class="card-body">
