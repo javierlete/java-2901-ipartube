@@ -8,6 +8,8 @@ public interface AutenticadoService {
 
 	Video altaVideo(@Valid Video video);
 
+	Video modificarVideo(@Valid Video video);
+
 	void bajaVideo(Long idVideo, Long idUsuario);
 
 }

@@ -5,6 +5,8 @@
 
 <main>
 	<form action="../listado.html" th:action="@{/usuario/nuevo-video}" method="post" th:object="${video}">
+		<input type="hidden" th:field="*{id}">
+	
 		<div th:replace="~{_fragmentos :: labelInput('Título', 'titulo', true, 'text')}"></div>
 		<div th:replace="~{_fragmentos :: labelInput('URL', 'url', true, 'url')}"></div>
 		<div th:replace="~{_fragmentos :: labelInput('Descripción', 'descripcion', true, 'text')}"></div>
