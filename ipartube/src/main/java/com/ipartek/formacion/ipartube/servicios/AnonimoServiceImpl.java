@@ -29,8 +29,18 @@ public class AnonimoServiceImpl implements AnonimoService {
 	}
 
 	@Override
+	public Iterable<Video> listadoVideos(Long idUsuario) {
+		return videoRepository.findByUsuarioId(idUsuario);
+	}
+
+	@Override
 	public Video detalleVideo(Long id) {
 		return videoRepository.findById(id).orElse(null);
+	}
+
+	@Override
+	public Usuario usuarioPorId(Long idUsuario) {
+		return usuarioRepository.findById(idUsuario).orElse(null);
 	}
 
 	@Override

@@ -6,4 +6,6 @@ import com.ipartek.formacion.ipartube.entidades.Video;
 
 public interface VideoRepository extends CrudRepository<Video, Long> {
 
+	Iterable<Video> findByUsuarioId(Long idUsuario);
+
 }
