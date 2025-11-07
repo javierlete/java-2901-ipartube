@@ -5,7 +5,9 @@ import java.util.logging.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ipartek.formacion.ipartube.entidades.Comentario;
 import com.ipartek.formacion.ipartube.entidades.Video;
+import com.ipartek.formacion.ipartube.repositorios.ComentarioRepository;
 import com.ipartek.formacion.ipartube.repositorios.VideoRepository;
 
 import jakarta.validation.Valid;
@@ -17,6 +19,9 @@ public class AutenticadoServiceImpl implements AutenticadoService {
 
 	@Autowired
 	private VideoRepository videoRepository;
+	
+	@Autowired
+	private ComentarioRepository comentarioRepository;
 	
 	@Override
 	public Video altaVideo(@Valid Video video) {
@@ -51,6 +56,11 @@ public class AutenticadoServiceImpl implements AutenticadoService {
 		if(video.getUsuario().getId() != idUsuario) {
 			throw new ServicioException("El usuario no es propietario del video que se quiere borrar");
 		}
+	}
+
+	@Override
+	public Comentario hacerComentario(Comentario comentario) {
+		return comentarioRepository.save(comentario);
 	}
 
 }

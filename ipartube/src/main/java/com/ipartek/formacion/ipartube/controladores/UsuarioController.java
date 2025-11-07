@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ipartek.formacion.ipartube.entidades.Comentario;
 import com.ipartek.formacion.ipartube.entidades.Usuario;
 import com.ipartek.formacion.ipartube.entidades.Video;
 import com.ipartek.formacion.ipartube.servicios.AnonimoService;
@@ -26,7 +27,7 @@ public class UsuarioController {
 
 	@Autowired
 	private AnonimoService anonimoService;
-
+	
 	@GetMapping("nuevo-video")
 	public String nuevoVideo(Video video) {
 		return "usuario/nuevo-video";
@@ -64,5 +65,14 @@ public class UsuarioController {
 		autenticadoService.bajaVideo(id, usuario.getId());
 
 		return "redirect:/canal?id=" + usuario.getId();
+	}
+	
+	@PostMapping("comentar")
+	public String comentar(Comentario comentario, @AuthenticationPrincipal Usuario usuario) {
+		comentario.setUsuario(usuario);
+		
+		autenticadoService.hacerComentario(comentario);
+		
+		return "redirect:/video?id=" + comentario.getVideo().getId();
 	}
 }

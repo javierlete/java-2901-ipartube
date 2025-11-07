@@ -1,11 +1,16 @@
 package com.ipartek.formacion.ipartube.servicios;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ipartek.formacion.ipartube.entidades.Comentario;
 import com.ipartek.formacion.ipartube.entidades.Usuario;
 import com.ipartek.formacion.ipartube.entidades.Video;
+import com.ipartek.formacion.ipartube.repositorios.ComentarioRepository;
 import com.ipartek.formacion.ipartube.repositorios.UsuarioRepository;
 import com.ipartek.formacion.ipartube.repositorios.VideoRepository;
 
@@ -22,6 +27,9 @@ public class AnonimoServiceImpl implements AnonimoService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private ComentarioRepository comentarioRepository;
 	
 	@Override
 	public Iterable<Video> listadoVideos() {
@@ -47,6 +55,16 @@ public class AnonimoServiceImpl implements AnonimoService {
 	public Usuario registro(@Valid Usuario usuario) {
 		usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 		return usuarioRepository.save(usuario);
+	}
+
+	@Override
+	public Page<Comentario> comentariosVideo(Long idVideo) {
+		return comentariosVideo(idVideo, 1);
+	}
+
+	@Override
+	public Page<Comentario> comentariosVideo(Long idVideo, Integer numeroComentarios) {
+		return comentarioRepository.findByVideoId(idVideo, PageRequest.of(0, numeroComentarios, Direction.DESC, "fechaHora"));
 	}
 
 }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html th:replace="~{_global :: global(~{::title}, ~{::main})}"
-	xmlns:th="https://thymeleaf.org">
+	xmlns:th="https://thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <title>Amazonia: Listado de productos</title>
 
 <main>
@@ -10,12 +11,50 @@
 		</div>
 		<div class="card-body">
 			<h5 class="card-title">
-				(<span th:text="*{usuario.nombre}">USUARIO</span>)
-				<span th:text="*{titulo}">TITULO</span>
+				(<span th:text="*{usuario.nombre}">USUARIO</span>) <span
+					th:text="*{titulo}">TITULO</span>
 			</h5>
 			<p class="card-text" th:text="*{descripcion}">EL MEJOR VIDEO</p>
 		</div>
 	</div>
+
+	<ul sec:authorize="isAuthenticated()" class="list-group mt-5">
+		<li class="list-group-item">
+			<div class="d-flex w-100 justify-content-between">
+				<h5 class="mb-1" sec:authentication="principal.nombre">USUARIO</h5>
+				<small
+					th:text="${#temporals.format(#temporals.createNow(), 'dd/MMM/yyyy H:mm')}">2025-11-07
+					9:14</small>
+			</div>
+			<form class="mt-3" th:action="@{/usuario/comentar}" method="post">
+				<input type="hidden" name="video.id" th:value="${video.id}">
+				<input type="hidden" name="primerComentarioId" th:value="${primerComentarioId}">
+				<textarea class="mb-3 form-control" name="texto"></textarea>
+				<button class="btn btn-primary">Comentar</button>
+			</form>
+		</li>
+	</ul>
+
+	<ul class="list-group mt-5">
+		<li th:each="comentario: ${comentarios}" th:object="${comentario}" th:id="|c*{id}|"
+			class="list-group-item">
+			<div class="d-flex w-100 justify-content-between">
+				<h5 class="mb-1" th:text="*{usuario.nombre}">USUARIO</h5>
+				<small
+					th:text="${#temporals.format(comentario.fechaHora, 'dd/MMM/yyyy H:mm')}">2025-11-07
+					9:14</small>
+			</div>
+			<p class="mb-1" th:text="*{texto}">Este video me mola como una
+				gramola</p>
+		</li>
+
+	</ul>
+	
+	<pre th:text="${comentarios.size}"></pre>
+
+	<p class="mt-5 text-center">
+		<a th:href="|@{/video(id=${video.id},numeroComentarios=${comentarios.size + 1})}#c${primerComentarioId}|">Ver más comentarios</a>
+	</p>
 </main>
 
 </html>
