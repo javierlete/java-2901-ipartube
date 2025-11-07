@@ -47,7 +47,10 @@ public class IndexController {
 
 		modelo.addAttribute("video", anonimoService.detalleVideo(id));
 		modelo.addAttribute("comentarios", comentariosVideo);
-		modelo.addAttribute("primerComentarioId", comentariosVideo.getContent().getLast().getId());
+
+		if (comentariosVideo.getContent().size() > 0) {
+			modelo.addAttribute("primerComentarioId", comentariosVideo.getContent().getLast().getId());
+		}
 
 		return "video";
 	}
